@@ -1,4 +1,4 @@
-version: 3
+version: '3'
 
 services:
   frontend:
@@ -8,7 +8,7 @@ services:
       - 5000:5000
     volumes:
       - ./frontend:/app
-  
+
   chat-service:
     container_name: chat-service
     build: 
@@ -25,7 +25,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./backend/chat-service:/app
+      - chat-service-db-data:/var/lib/postgresql/data
 
   user-service:
     container_name: user-service
@@ -43,4 +43,8 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./backend/user-service:/app
+      - user-service-db-data:/var/lib/postgresql/data
+
+volumes:
+  user-service-db-data:
+  chat-service-db-data:
