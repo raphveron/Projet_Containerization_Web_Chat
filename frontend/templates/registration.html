@@ -10,7 +10,6 @@
     <div class="registration-container">
         <h1>Inscription</h1>
         <form id="registrationForm" action="/register" method="post">
-            <!-- Ajoutez ici les champs pour les données personnelles -->
             <div class="input-group">
                 <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
             </div>
@@ -24,6 +23,10 @@
                 <button type="submit">S'inscrire</button>
             </div>
         </form>
+        <!-- Lien vers la page de connexion -->
+        <div class="login-link">
+            Déjà inscrit ? <a href="/login">Connectez-vous ici</a>
+        </div>
     </div>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
