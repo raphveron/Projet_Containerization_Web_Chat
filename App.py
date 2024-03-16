@@ -25,6 +25,7 @@ class User(db.Model):
 def create_tables():
     db.create_all()
 
+#region login
 @app.route('/')
 def home():
     return render_template('login.html')
@@ -48,6 +49,9 @@ def login():
 @app.route('/register', methods=['GET'])
 def register():
     return render_template('registration.html')
+#endregion
+
+#region register
 
 @app.route('/register', methods=['POST'])
 def register_post():
@@ -64,7 +68,9 @@ def register_post():
         return redirect(url_for('login'))
     else:
         return "Un compte avec ce nom d'utilisateur existe déjà."
+#endregion
 
+#region main
 @app.route('/logout', methods=['GET'])
 def logout():
     # Votre code pour effacer la session
@@ -83,6 +89,16 @@ def search():
         user_list = []
 
     return {'users': user_list}  # Retournez la liste d'utilisateurs en JSON
+
+@app.route('/chat/<username>')
+def chat(username):
+    # Vous devrez ajouter une logique pour vérifier si l'utilisateur actuel a
+    # le droit de discuter avec l'utilisateur `username`.
+    # Ensuite, récupérez les messages du chat ou tout autre information nécessaire.
+    
+    return render_template('chat.html', username=username)
+
+#endregion
 
 @app.route('/main')
 def main():

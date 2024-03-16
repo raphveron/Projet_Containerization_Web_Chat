@@ -155,9 +155,15 @@ button:hover {
 }
 
 #userList li a {
-    color: #333; /* Couleur de texte foncée pour un contraste élevé sur fond clair */
-    text-decoration: none; /* Enlève le soulignement des liens */
-    display: block; /* Fait que le lien occupe tout l'espace horizontal de l'élément de liste */
+    color: #f7f4f4;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid #fffafa;
+    border-radius: 4px;
+    margin: 4px 0; /* Ajoute un peu d'espace entre les boutons */
+    background-color: #0d6415;
+    text-align: left;
 }
 
 #userList li a:hover {

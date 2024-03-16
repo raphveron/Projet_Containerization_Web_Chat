@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with {{ username }} - My Chat App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hub.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav>
+        <a href="/main">Back to rooms</a> | 
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container chat-container">
+        <main>
+            <h1>Chat with {{ username }}</h1>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Ici seront affichés les messages du chat avec l'utilisateur `username` -->
+                <!-- Vous devez remplir ceci avec des données dynamiques venant de votre serveur -->
+            </div>
+            <form id="chatMessageForm">
+                <input type="text" id="chatMessageInput" placeholder="Type a message...">
+                <button type="submit">Send</button>
+            </form>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/hub.js') }}"></script>
+    <!-- Vous pouvez ajouter ici un script spécifique pour gérer le chat -->
+</body>
+</html>

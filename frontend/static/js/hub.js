@@ -32,11 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Videz la liste actuelle
                         userList.innerHTML = '';
                         // Ajoutez les résultats de la recherche à la liste
-                        data.users.forEach(function(user) {
-                            var userItem = document.createElement('li');
-                            userItem.textContent = user.username;
-                            // Vous pouvez également ajouter un lien ou un bouton pour interagir avec l'utilisateur
-                            userList.appendChild(userItem);
+                    // Ajoutez les résultats de la recherche à la liste
+                    data.users.forEach(function(user) {
+                        var userItem = document.createElement('li');
+                        var userLink = document.createElement('a');
+                        userLink.href = '/chat/' + encodeURIComponent(user.username); // Assurez-vous d'encoder le nom d'utilisateur dans l'URL
+                        userLink.textContent = user.username;
+                        userItem.appendChild(userLink);
+                        userList.appendChild(userItem);
                         });
                     })
                     .catch(function(error) {
@@ -46,3 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ...
+data.users.forEach(function(user) {
+    var userItem = document.createElement('li');
+    var userLink = document.createElement('a');
+    userLink.href = '/chat/' + user.username; // Créez le lien dynamique
+    userLink.textContent = user.username;
+    userItem.appendChild(userLink);
+    userList.appendChild(userItem);
+});
+// ...
+
