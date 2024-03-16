@@ -1,3 +1,5 @@
+/*#region Login*/
+
 body, html {
     height: 100%;
     margin: 0;
@@ -34,7 +36,7 @@ aside {
     padding: 20px;
     overflow-y: auto;
 }
-
+/*#region register*/
 main {
     background: white;
     border-radius: 10px;
@@ -74,6 +76,19 @@ button {
     width: 100%; /* Full-width for mobile, adjust as needed */
 }
 
+.flash-messages .error {
+    color: red;  /* Couleur du texte pour les erreurs */
+    background-color: #ffd2d2;  /* Fond clair pour que le message ressorte */
+    border: 1px solid #ff0000;  /* Une bordure pour souligner l'erreur */
+    padding: 10px;
+    margin-bottom: 20px;  /* Espacer le message du formulaire de connexion */
+    border-radius: 4px;  /* Coins arrondis pour le style */
+}
+/*#endregion register*/
+/*#endregion Login*/
+
+
+/*#region main*/
 button:hover {
     background-color: #4cae4c;
 }
@@ -169,3 +184,97 @@ button:hover {
 #userList li a:hover {
     background-color: #3017d6; /* Couleur de fond légèrement différente au survol */
 }
+/*#region roomList */
+/* Style pour la liste des utilisateurs et des salles de chat */
+#userList, #roomList {
+    list-style-type: none; /* Enlève les puces */
+    padding: 0;
+    margin: 0;
+    background-color: #f2f2f2; /* Couleur de fond pour les listes */
+    border-radius: 4px; /* Bordures arrondies */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombre portée pour un effet de profondeur */
+    max-height: 300px; /* Hauteur maximale avec défilement */
+    overflow-y: auto; /* Permettre le défilement vertical */
+    margin-bottom: 20px; /* Espace avant le bouton créer une salle */
+}
+
+#userList li, #roomList li {
+    padding: 10px; /* Espacement intérieur */
+    border-bottom: 1px solid #ddd; /* Séparateur entre les éléments */
+}
+
+#userList li:last-child, #roomList li:last-child {
+    border-bottom: none; /* Pas de séparateur pour le dernier élément */
+}
+
+#userList li a, #roomList li a {
+    color: #333; /* Couleur du texte des liens */
+    text-decoration: none; /* Pas de soulignement */
+    display: block; /* Rend le lien cliquable sur toute la largeur de l'élément */
+}
+
+#userList li a:hover, #roomList li a:hover {
+    background-color: #e6e6e6; /* Couleur de fond au survol */
+}
+
+/* Style pour le bouton créer une salle */
+.create-room-btn {
+    display: block; /* Rend le bouton comme un bloc */
+    width: 100%; /* Pleine largeur */
+    padding: 10px; /* Espacement intérieur */
+    margin-bottom: 20px; /* Espace en dessous du bouton */
+    background-color: #4caf50; /* Couleur du bouton */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* Curseur pointeur */
+}
+
+.create-room-btn:hover {
+    background-color: #45a049; /* Couleur au survol */
+}
+
+/*#endregion roomList*/
+
+/*#endregion main*/
+
+/* Styles pour la zone de chat dans hub.css */
+/*#region chat*/
+.chat-messages {
+    height: 60vh; /* Augmentez la hauteur pour donner plus d'espace aux messages */
+    overflow-y: auto; /* Permettre le défilement si nécessaire */
+    background-color: #f9f9f9; /* Un fond légèrement différent pour les messages */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px; /* Espace avant la zone de saisie de message */
+}
+
+/* Stylisez chaque message individuellement si nécessaire */
+.message {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #fff; /* Un fond blanc pour que chaque message se détache */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour la zone d'entrée du message */
+#chatMessageForm {
+    display: flex;
+    margin-top: 10px;
+}
+
+#chatMessageInput {
+    flex-grow: 1; /* Permet à l'input de s'étendre pour occuper l'espace disponible */
+    padding: 10px;
+    margin-right: 10px; /* Espace entre l'input et le bouton d'envoi */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px; /* Padding plus grand pour un bouton plus accessible */
+    /* Les autres propriétés restent les mêmes */
+}
+/*#endregion chat*/

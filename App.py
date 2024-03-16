@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -42,8 +42,9 @@ def login():
             return redirect(url_for('main'))
         else:
             # L'email n'existe pas ou le mot de passe est incorrect
-            return "Email or password is incorrect.", 401  # 401 est le code d'état pour les erreurs d'autorisation
-    
+            flash('Email or password is incorrect.', 'error')  # Le deuxième argument est facultatif et représente une catégorie
+            return redirect(url_for('login'))  # Redirection vers la page de connexion
+
     return render_template('login.html')
 
 @app.route('/register', methods=['GET'])

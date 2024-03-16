@@ -15,16 +15,20 @@
         <main>
             <h1>Chat with {{ username }}</h1>
             <div class="chat-messages" id="chatMessages">
-                <!-- Ici seront affichés les messages du chat avec l'utilisateur `username` -->
-                <!-- Vous devez remplir ceci avec des données dynamiques venant de votre serveur -->
+                <!-- Supposons que les messages sont dans une variable 'messages' passée au template -->
+                {% for message in messages %}
+                    <div class="message">
+                        <p><strong>{{ message.sender_username }}:</strong> {{ message.text }}</p>
+                        <span class="timestamp">{{ message.timestamp }}</span>
+                    </div>
+                {% endfor %}
             </div>
             <form id="chatMessageForm">
-                <input type="text" id="chatMessageInput" placeholder="Type a message...">
+                <input type="text" id="chatMessageInput" placeholder="Type a message..." autocomplete="off">
                 <button type="submit">Send</button>
             </form>
         </main>
     </div>
     <script src="{{ url_for('static', filename='js/hub.js') }}"></script>
-    <!-- Vous pouvez ajouter ici un script spécifique pour gérer le chat -->
 </body>
 </html>
