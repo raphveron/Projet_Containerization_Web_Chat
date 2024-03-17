@@ -5,23 +5,27 @@ from flask_migrate import Migrate
 import bcrypt
 import os
 
+# create the Flask app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://normaluser:user@user-service-db:5432/postgres-db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://normaluser:user@user-service-db:5432/postgres-db') # PostgreSQL database
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'warum')
 
+# initialize SQLAlchemy
 db = SQLAlchemy(app)
+# initialize JWT
 jwt = JWTManager(app)
+# initialize Migrate
 migrate = Migrate(app, db)
 
-
-
+# create a User model
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
+# create the route /signup
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -41,6 +45,7 @@ def signup():
 
     return jsonify({"msg": "User created successfully"}), 201
 
+# create the route /login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -54,6 +59,7 @@ def login():
 
     return jsonify({"msg": "Bad username or password"}), 401
 
+# run the application
 if __name__ == '__main__':
     with app.app_context():
         print("Creating database tables...")
