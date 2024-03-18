@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (!storedUsername) {
         // display a warning message and redirect to the login page
-        alert('You need to be logged in to access this page!');
+        alert('You need to be logged in to see your messages!');
         window.location.href = '/login';
     }
 
