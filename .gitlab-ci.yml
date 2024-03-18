@@ -42,17 +42,9 @@ scan_dockerfiles:
       /kaniko/executor
       --context $CI_PROJECT_DIR/$CONTEXT
       --dockerfile $CI_PROJECT_DIR/$DOCKERFILE
-      --destination docker.io/$DOCKER_USERNAME/$SERVICE:$CI_COMMIT_SHORT_SHA
+      --destination docker.io/ahmedmaaloul/project-ct/$SERVICE:$CI_COMMIT_SHORT_SHA
 
-build_frontend:
-  <<: *build_template
-  variables:
-    CONTEXT: ./frontend
-    DOCKERFILE: Dockerfile
-    SERVICE: frontend
-  only:
-    - branches
-
+# Define build jobs for each service
 build_frontend:
   <<: *build_template
   variables:
