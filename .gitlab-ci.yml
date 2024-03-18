@@ -6,7 +6,7 @@ stages:
 run_kics_scan:
   stage: kics_scan
   image: 
-    name: checkmarx/kics:1.7.11
+    name: checkmarx/kics:v1.7.11
     entrypoint: [""]
   script:
     - mkdir -p output 
