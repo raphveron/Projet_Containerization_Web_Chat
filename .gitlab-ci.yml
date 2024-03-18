@@ -29,7 +29,6 @@ show_kics_results:
     paths:
       - output/
     expire_in: 1 week
-
 build-frontend:
   stage: build
   image: 
