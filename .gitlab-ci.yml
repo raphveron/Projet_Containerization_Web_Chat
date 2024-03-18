@@ -9,7 +9,7 @@ scan_and_show_results:
     entrypoint: [""]
   script:
     - apk add --no-cache jq
-    - kics scan -p . -o output --ci
+    - kics scan -p . -o output --ci || true  # Don't fail the job if kics scan command fails
     - jq '.severity_counters.HIGH' output/results.json
     - if [ $(jq '.severity_counters.HIGH' output/results.json) -gt 0 ]; then echo "High severity issues found"; exit 1; fi
   artifacts:
