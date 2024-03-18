@@ -7,24 +7,16 @@ scan_and_show_results:
   image: 
     name: checkmarx/kics:latest
     entrypoint: [""]
-    script:
-      - |
-        set +e # Disable immediate exit on error
-        kics scan -p . -o output --ci
-        SCAN_RESULT=$?
-        if [ $SCAN_RESULT -ne 0 ]; then
-          echo "Scan completed with errors"
-          if grep -q 'failed to detect cwe' output/results.json; then
-            echo "Known issue detected, proceeding with caution"
-          else
-            exit $SCAN_RESULT
-          fi
-        fi
-        set -e # Re-enable immediate exit on error
+  script:
+    - apk add --no-cache jq
+    - kics scan -p . -o output --ci
+    - jq '.severity_counters.HIGH' output/results.json
+    - if [ $(jq '.severity_counters.HIGH' output/results.json) -gt 0 ]; then echo "High severity issues found"; exit 1; fi
   artifacts:
     paths:
       - output/
     expire_in: 1 week
+
 build-frontend:
   stage: build
   image: 
