@@ -1,7 +1,7 @@
 Flask
 psycopg2-binary
 Flask-SQLAlchemy
-Flask-Migrate
 Flask-JWT-Extended
-python-dotenv
+Flask-Migrate
+Flask-Cors
 bcrypt
