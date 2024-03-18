@@ -2,22 +2,33 @@ stages:
   - scan
   - build_and_deploy
 
+variables:
+  DOCKERFILES: |
+    ./frontend/Dockerfile
+    ./backend/chat-service/Dockerfile.app
+    ./backend/chat-service/Dockerfile.db
+    ./backend/user-service/Dockerfile.app
+    ./backend/user-service/Dockerfile.db
+
 scan_dockerfiles:
   stage: scan
   image: 
     name: checkmarx/kics:latest
     entrypoint: [""]
   script:
-    - kics scan --path Dockerfile --output-path kics-results.json
     - |
-      if grep -q '"severity": "HIGH"' kics-results.json; then
-        echo "High severity issue found, failing the job."
-        exit 1
-      fi
+      for dockerfile_path in $DOCKERFILES; do
+        echo "Scanning $dockerfile_path"
+        kics scan --path $dockerfile_path --output-path kics-results.json
+        if grep -q '"severity": "HIGH"' kics-results.json; then
+          echo "High severity issue found in $dockerfile_path, failing the job."
+          exit 1
+        fi
+      done
   only:
     - branches
 
-build_and_deploy:
+.build_template: &build_template
   stage: build_and_deploy
   image: 
     name: gcr.io/kaniko-project/executor:debug
@@ -25,10 +36,49 @@ build_and_deploy:
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - /kaniko/executor --context $CI_PROJECT_DIR/$CONTEXT --dockerfile $CI_PROJECT_DIR/$DOCKERFILE --destination $CI_REGISTRY_IMAGE/$SERVICE:$CI_COMMIT_SHORT_SHA
+
+build_frontend:
+  <<: *build_template
+  variables:
+    CONTEXT: ./frontend
+    DOCKERFILE: ./frontend/Dockerfile
+    SERVICE: frontend
   only:
     - branches
-  except:
-    - master
-  dependencies:
-    - scan_dockerfiles
+
+build_chat_service:
+  <<: *build_template
+  variables:
+    CONTEXT: ./backend/chat-service
+    DOCKERFILE: ./backend/chat-service/Dockerfile.app
+    SERVICE: chat-service
+  only:
+    - branches
+
+build_chat_service_db:
+  <<: *build_template
+  variables:
+    CONTEXT: ./backend/chat-service
+    DOCKERFILE: ./backend/chat-service/Dockerfile.db
+    SERVICE: chat-service-db
+  only:
+    - branches
+
+build_user_service:
+  <<: *build_template
+  variables:
+    CONTEXT: ./backend/user-service
+    DOCKERFILE: ./backend/user-service/Dockerfile.app
+    SERVICE: user-service
+  only:
+    - branches
+
+build_user_service_db:
+  <<: *build_template
+  variables:
+    CONTEXT: ./backend/user-service
+    DOCKERFILE: ./backend/user-service/Dockerfile.db
+    SERVICE: user-service-db
+  only:
+    - branches
