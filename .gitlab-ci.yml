@@ -5,12 +5,12 @@ stages:
 scan_and_show_results:
   stage: scan_and_show_results
   image: 
-    name: checkmarx/kics:latest
+    name: checkmarx/kics:1.4.9 # Replace 1.4.9 with the specific version you want to use
     entrypoint: [""]
   script:
     - apk add --no-cache jq || true
     - kics scan -p . -o output --ci
-    - apk add --no-cache jq # This might be redundant if jq was successfully installed the first time
+    - apk add --no-cache jq
     - jq '.severity_counters.HIGH' output/results.json
     - if [ $(jq '.severity_counters.HIGH' output/results.json) -gt 0 ]; then echo "High severity issues found"; exit 1; fi
   artifacts:
