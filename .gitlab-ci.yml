@@ -20,6 +20,7 @@ show_kics_results:
   stage: show_results
   image: alpine:latest
   script:
+    - mkdir -p output 
     - apk add --no-cache jq
     - jq '.severity_counters.HIGH' output/results.json
     - if [ $(jq '.severity_counters.HIGH' output/results.json) -gt 0 ]; then echo "High severity issues found"; exit 1; fi
