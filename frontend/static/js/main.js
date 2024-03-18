@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // event to logout the user
     document.getElementById("logout").addEventListener("click", function() {
-        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('accessToken');
         window.location.href = '/login';
     });
 

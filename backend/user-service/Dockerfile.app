@@ -6,7 +6,7 @@ WORKDIR /app
 
 # copy the dependencies file to the working directory and run the command to install the dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy the 'app.py' file to the working directory
 COPY app.py .
