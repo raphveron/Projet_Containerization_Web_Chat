@@ -7,8 +7,9 @@ RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 # set the working directory in the container
 WORKDIR /app
 
-# run the command to install the dependencies
-RUN pip install flask watchdog
+# copy the dependencies file to the working directory and run the command to install the dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 # copy the application files to the working directory
 COPY app.py /app
