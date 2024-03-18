@@ -1,30 +1,18 @@
 stages:
-  - kics_scan
-  - show_results
+  - scan_and_show_results
   - build
 
-run_kics_scan:
-  stage: kics_scan
+scan_and_show_results:
+  stage: scan_and_show_results
   image: 
     name: checkmarx/kics:latest
     entrypoint: [""]
   script:
     - apk add --no-cache jq || true
     - kics scan -p . -o output --ci
-  artifacts:
-    paths:
-      - output/
-    expire_in: 1 week
-
-show_kics_results:
-  stage: show_results
-  image: alpine:latest
-  script:
-    - apk add --no-cache jq
+    - apk add --no-cache jq # This might be redundant if jq was successfully installed the first time
     - jq '.severity_counters.HIGH' output/results.json
     - if [ $(jq '.severity_counters.HIGH' output/results.json) -gt 0 ]; then echo "High severity issues found"; exit 1; fi
-  dependencies:
-    - run_kics_scan
   artifacts:
     paths:
       - output/
