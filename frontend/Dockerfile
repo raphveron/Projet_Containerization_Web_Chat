@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # run the command to install the dependencies
-RUN pip install flask
+RUN pip install --no-cache-dir flask
 
 # copy the 'app.py' file to the working directory
 COPY app.py /app
