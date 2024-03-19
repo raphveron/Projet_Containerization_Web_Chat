@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (onlyUsername) {
             username = user; // if the user is a string, it's the username
         }
-        fetch(`http://localhost:5001/get_messages/${username}`)
+        fetch(`http://localhost:5001/get_messages/${username}?connectedUser=${storedUsername}`)
         .then(response => response.json())
         .then(data => {
             // display the username to which the messages belong
