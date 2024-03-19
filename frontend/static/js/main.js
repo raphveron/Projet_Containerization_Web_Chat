@@ -144,6 +144,14 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = '/login';
     });
 
+
     // call the function to fill the user list
     fillUserList();
+    function refreshMessages() {
+        const selectedUser = document.getElementById("your-messages").name;
+        if (selectedUser) {
+            displayMessages(selectedUser, true);
+        }
+    }
+    setInterval(refreshMessages, 2000);
 });
